@@ -3,26 +3,53 @@
 import css from "./AuthNavigation.module.css";
 import Link from "next/link";
 import { useAuthStore } from "@/lib/store/authStore";
+import { logout } from "@/lib/api/clientApi";
+import { useRouter } from "next/navigation";
 
 export default function AuthNavigation() {
-  const isAuthenticted = useAuthStore((state) => state.isAuthenticated);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const user = useAuthStore((state) => state.user);
+  const router = useRouter();
+
+  const clearIsAuthenticated = useAuthStore(
+    (state) => state.clearIsAuthenticated,
+  );
+
+  const handleLogout = async () => {
+    await logout();
+    clearIsAuthenticated();
+    router.push("/sign-in");
+  };
   return (
     <>
-      {isAuthenticted && (
-        <li className={css.navigationItem}>
-          <Link href="/profile" prefetch={false} className={css.navigationLink}>
-            Profile
-          </Link>
-        </li>
-      )}
-      {isAuthenticted && user && (
-        <li className={css.navigationItem}>
-          <p className={css.userEmail}>User email</p>
-          <button className={css.logoutButton}>Logout</button>
-        </li>
-      )}
-      {!isAuthenticted && (
+      {isAuthenticated ? (
+        <>
+          <li className={css.navigationItem}>
+            <Link href="/notes/filter/all" className={css.navigationLink}>
+              Notes
+            </Link>
+          </li>
+          <li className={css.navigationItem}>
+            <Link
+              href="/profile"
+              prefetch={false}
+              className={css.navigationLink}
+            >
+              Profile
+            </Link>
+          </li>
+          <li className={css.navigationItem}>
+            <p className={css.userEmail}>{user?.email}</p>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className={css.logoutButton}
+            >
+              Logout
+            </button>
+          </li>
+        </>
+      ) : (
         <>
           <li className={css.navigationItem}>
             <Link
