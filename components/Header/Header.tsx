@@ -8,7 +8,6 @@ const Header = () => {
       <Link href="/" className={css.headerLink} aria-label="Home">
         NoteHub
       </Link>
-
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li className={css.navigationItem}>
