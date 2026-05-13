@@ -1,5 +1,3 @@
-"use client";
-
 import axios from "axios";
 
 //const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;

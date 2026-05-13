@@ -44,6 +44,15 @@ export const logout = async (): Promise<void> => {
   return res.data;
 };
 
+export type UpdateUserRequest = {
+  username?: string;
+};
+
+export const updateMe = async (payload: UpdateUserRequest) => {
+  const res = await nextServer.patch<User>("/users/me", payload);
+  return res.data;
+};
+
 export interface FetchNotesParams {
   page?: number;
   search?: string;

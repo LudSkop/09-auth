@@ -1,34 +1,40 @@
 import css from "./ProfilePage.module.css";
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
+import { getMe } from "@/lib/api/serverApi";
 
-export const metadata: Metadata = {
-  title: "Profile | NoteHub",
-  description: "User profile page in NoteHub application.",
-  openGraph: {
-    title: "Profile | NoteHub",
+export async function generateMetadata(): Promise<Metadata> {
+  const user = await getMe();
+  return {
+    title: `Profile of ${user.username}`,
     description: "User profile page in NoteHub application.",
-    url: "https://your-site.vercel.app/profile",
-    siteName: "NoteHub",
-    images: [
-      {
-        url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
-      },
-    ],
-    type: "website",
-  },
-};
+    openGraph: {
+      title: `Profile of ${user.username}`,
+      description: "User profile page in NoteHub application.",
+      url: `https://notehub.com/profile/${user.username}`,
+      siteName: "NoteHub",
+      images: [
+        {
+          url: "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg",
+        },
+      ],
+      type: "website",
+    },
+  };
+}
 
-export default function ProfilePage() {
+export default async function Profile() {
+  const user = await getMe();
   return (
     <>
       <main className={css.mainContent}>
         <div className={css.profileCard}>
           <div className={css.header}>
             <h1 className={css.formTitle}>Profile Page</h1>
-            <a href="" className={css.editProfileButton}>
+            <Link href="/profile/edit" className={css.editProfileButton}>
               Edit Profile
-            </a>
+            </Link>
           </div>
           <div className={css.avatarWrapper}>
             <Image
@@ -40,8 +46,8 @@ export default function ProfilePage() {
             />
           </div>
           <div className={css.profileInfo}>
-            <p>Username: Luidmyla Skopenko</p>
-            <p>Email: luda.skopenko80@gmail.com</p>
+            <p>Username: {user.username}</p>
+            <p>Email: {user.email}</p>
           </div>
         </div>
       </main>
