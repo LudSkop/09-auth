@@ -8,7 +8,7 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import { useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
-import { fetchNotes } from "@/lib/api";
+import { fetchNotes } from "@/lib/api/api";
 import Link from "next/link";
 
 type Props = {
