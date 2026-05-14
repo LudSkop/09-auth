@@ -2,17 +2,14 @@
 
 import type { CreateNotePayload, Note } from "@/types/note";
 import nextServer from "@/lib/api/api";
+import type { User } from "@/types/user";
 
 export type RegisterRequest = {
   email: string;
   password: string;
-  userName: string;
-};
-export interface User {
-  email: string;
   username: string;
-  avatar: string;
-}
+};
+
 export const register = async (data: RegisterRequest) => {
   const res = await nextServer.post<User>("auth/register", data);
   return res.data;
@@ -40,8 +37,7 @@ export const getMe = async () => {
 };
 
 export const logout = async (): Promise<void> => {
-  const res = await nextServer.post("/auth/logout");
-  return res.data;
+  await nextServer.post("/auth/logout");
 };
 
 export type UpdateUserRequest = {

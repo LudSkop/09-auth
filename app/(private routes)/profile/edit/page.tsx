@@ -6,6 +6,8 @@ import css from "./EditProfile.module.css";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/lib/store/authStore";
+const DEFAULT_AVATAR =
+  "https://ac.goit.global/fullstack/react/notehub-og-meta.jpg";
 
 const EditProfile = () => {
   const [username, setUsername] = useState<string>("");
@@ -41,7 +43,7 @@ const EditProfile = () => {
         <h1 className={css.formTitle}>Edit Profile</h1>
 
         <Image
-          src="https://ac.goit.global/fullstack/react/notehub-og-meta.jpg"
+          src={avatar || DEFAULT_AVATAR}
           alt="User Avatar"
           width={120}
           height={120}
